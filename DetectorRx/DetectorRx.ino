@@ -55,8 +55,8 @@ void loop()
   }
   time_total = millis() - time_start;
   int quot = int(time_total*100/time_est);
-  int dose(quot, 100, 300, 9999, 0)
-  displayNumber(dose)
+  int dose(quot, 100, 300, 9999, 0);
+  displayNumber(dose);
 }
 
 
@@ -67,53 +67,6 @@ void displayNumber(int toDisplay) {
 long beginTime = millis();
 
   for(int digit = 4 ; digit > 0 ; digit--) {
-    //Turn on a digit for a short amount of time
-    switch(digit) {
-    case 1:
-      digitalWrite(digit1, DIGIT_ON);
-      break;
-    case 2:
-      digitalWrite(digit2, DIGIT_ON);
-      break;
-    case 3:
-      digitalWrite(digit3, DIGIT_ON);
-      break;
-    case 4:
-      digitalWrite(digit4, DIGIT_ON);
-      break;
-    }
-
-    //Turn on the right segments for this digit
-    lightNumber(toDisplay % 10);
-    toDisplay /= 10;
-
-    delayMicroseconds(DISPLAY_BRIGHTNESS); 
-    //Display digit for fraction of a second (1us to 5000us, 500 is pretty good)
-
-    //Turn off all segments
-    lightNumber(10); 
-
-    //Turn off all digits
-    digitalWrite(digit1, DIGIT_OFF);
-    digitalWrite(digit2, DIGIT_OFF);
-    digitalWrite(digit3, DIGIT_OFF);
-    digitalWrite(digit4, DIGIT_OFF);
-  }
-
-  while( (millis() - beginTime) < 10) ; 
-  //Wait for 20ms to pass before we paint the display again
-}
-
-void displayNumber(int toDisplay) {
-#define DISPLAY_BRIGHTNESS  500
-
-#define DIGIT_ON  HIGH
-#define DIGIT_OFF  LOW
-
-  long beginTime = millis();
-
-  for(int digit = 4 ; digit > 0 ; digit--) {
-
     //Turn on a digit for a short amount of time
     switch(digit) {
     case 1:
