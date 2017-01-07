@@ -10,7 +10,7 @@ const char msgChar[] =  "A";
 void setup()
 {
  vw_set_tx_pin  (uint8_t tx_pin);
- pinMode(pot_pin, OUTPUT);
+ pinMode(pot_pin, INPUT);
 }
 
 void loop()
@@ -23,7 +23,7 @@ void loop()
 void pot_read()
 {
   int pot = analogRead(pot_pin);
-  pot = map(pot, 0, 1023, 50, 0);
+  pot = map(pot, 0, 1023, 50, 1);
   return(pot);
 }
 
