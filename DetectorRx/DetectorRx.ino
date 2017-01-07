@@ -4,7 +4,7 @@
  */
 
 
-const int rx_pin = 12; //pin with transmitter connected to it
+const int rx_pin = 12; //pin with reciever connected to it
 const int total = 100; //total amount of signals to listen to in single round
 int count = 0; //amount of recieved pulses
 int time_start; //starting time (before counting pulses)
@@ -27,7 +27,7 @@ int segG = 7; //display pins - segment
 
 void setup()
 {
-  pinMode(rx_pin, INPUT);  //display pins - segment
+  pinMode(rx_pin, INPUT);  //pin with reciever
   pinMode(segA, OUTPUT); //display pins - segment
   pinMode(segB, OUTPUT); //display pins - segment
   pinMode(segC, OUTPUT); //display pins - segment
