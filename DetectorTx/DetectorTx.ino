@@ -1,22 +1,22 @@
-/#include <VirtualWire.h>
 /*
  This is transmitter code, it just sends pulses every .3 seconds.
  */
 const int tx_pin = 12;
 int delay_time = 30;
 const int pot_pin = 11;
-const char msgChar[] =  "A";
 
 void setup()
 {
- vw_set_tx_pin  (uint8_t tx_pin);
+ pinMode(tx_pin, OUTPUT);
  pinMode(pot_pin, INPUT);
 }
 
 void loop()
 {
   delay_time = pot_read(); //comment this line if potentiometer is not used/needed
-  vw_send((uint8_t *)msgChar, strlen(msgChar));
+  digitalWrite(tx_pin, HIGH);
+  delay(1);
+  digitalWrite(tx_pin, LOW);
   delay (delay_time);
 }
 

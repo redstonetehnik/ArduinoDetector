@@ -1,4 +1,3 @@
-#include <VirtualWire.h>
 /*
  This is reciever code, it listens for certain amount of pulses and measures the time it takes to do so,
  then it calculates percentage of packets lost.
@@ -28,7 +27,7 @@ int segG = 7; //Display pin 15
 
 void setup()
 {
-  vw_set_rx_pin (uint8_t pin);
+  pinMode(rx_pin, INPUT);
   pinMode(segA, OUTPUT);
   pinMode(segB, OUTPUT);
   pinMode(segC, OUTPUT);
@@ -49,7 +48,7 @@ void loop()
 {
   time_start = millis();
   while (count < total + 1){
-    if (vw_get_message(buf, &buflen)) // Counts how many messages it recieved
+    if (digitalRead(rx_pin) == HIGH)// Counts how many messages it recieved
     {
       count++;
     }
