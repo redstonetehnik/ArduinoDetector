@@ -20,7 +20,7 @@ void loop()
   delay (delay_time);
 }
 
-void pot_read()
+int pot_read()
 {
   int pot = analogRead(pot_pin);
   pot = map(pot, 0, 1023, 50, 1);
