@@ -1,4 +1,9 @@
 #include <VirtualWire.h>
+/*
+ This is reciever code, it listens for certain amount of pulses and measures the time it takes to do so,
+ then it calculates percentage of packets lost.
+ */
+
 
 const int rx_pin = 12;
 const int total = 100;
