@@ -10,7 +10,8 @@ int count = 0; //amount of recieved pulses
 int time_start; //starting time (before counting pulses)
 int time_total; //time needed to count the pulses
 int time_est = 30 * total; //time that it should need to count all the pulses (0% loss)
-
+int dose = 0000; //beginning dose
+/*
 int digit1 = 11; //display pins - digit
 int digit2 = 10; //display pins - digit
 int digit3 = 9; //display pins - digit
@@ -23,11 +24,13 @@ int segD = 4; //display pins - segment
 int segE = 5; //display pins - segment
 int segF = 6; //display pins - segment
 int segG = 7; //display pins - segment
-
+*/
 
 void setup()
 {
+  
   pinMode(rx_pin, INPUT);  //pin with reciever
+  /*
   pinMode(segA, OUTPUT); //display pins - segment
   pinMode(segB, OUTPUT); //display pins - segment
   pinMode(segC, OUTPUT); //display pins - segment
@@ -40,6 +43,7 @@ void setup()
   pinMode(digit2, OUTPUT); //display pins - digit
   pinMode(digit3, OUTPUT); //display pins - digit
   pinMode(digit4, OUTPUT); //display pins - digit
+  */
 }
 
 void loop()
@@ -50,14 +54,15 @@ void loop()
     {
       count++;
     }
+  //  displayNumber(dose);
   }
   time_total = millis() - time_start;
   int quot = int(time_total*100/time_est);  //converts time needed for total amount of pulses into distance
-  int dose(quot, 100, 300, 9999, 0);
-  displayNumber(dose);
+  dose = map(quot, 100, 300, 9999, 0);
+  Serial.println(dose);
 }
 
-
+/*
 void displayNumber(int toDisplay) { //displays number on a display
 #define DISPLAY_BRIGHTNESS  500
 #define DIGIT_ON  HIGH
@@ -221,4 +226,4 @@ void lightNumber(int numberToDisplay) { //displays a single digit on a display
     break;
   }
 }
-
+*/
