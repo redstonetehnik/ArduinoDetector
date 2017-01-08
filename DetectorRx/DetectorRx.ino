@@ -1,67 +1,64 @@
-#include <VirtualWire.h>
 /*
  This is reciever code, it listens for certain amount of pulses and measures the time it takes to do so,
  then it calculates percentage of packets lost.
  */
 
 
-const int rx_pin = 12;
-const int total = 100;
-int count = 0;
-int time_start;
-int time_total;
-int time_est = 30 * total;
+const int rx_pin = 12; //pin with reciever connected to it
+const int total = 100; //total amount of signals to listen to in single round
+int count = 0; //amount of recieved pulses
+int time_start; //starting time (before counting pulses)
+int time_total; //time needed to count the pulses
+int time_est = 30 * total; //time that it should need to count all the pulses (0% loss)
 
-int digit1 = 11; //PWM Display pin 1
-int digit2 = 10; //PWM Display pin 2
-int digit3 = 9; //PWM Display pin 6
-int digit4 = 8; //PWM Display pin 8
+int digit1 = 11; //display pins - digit
+int digit2 = 10; //display pins - digit
+int digit3 = 9; //display pins - digit
+int digit4 = 8; //display pins - digit
 
-int segA = 1; //Display pin 14
-int segB = 2; //Display pin 16
-int segC = 3; //Display pin 13
-int segD = 4; //Display pin 3
-int segE = 5; //Display pin 5
-int segF = 6; //Display pin 11
-int segG = 7; //Display pin 15
+int segA = 1; //display pins - segment
+int segB = 2; //display pins - segment
+int segC = 3; //display pins - segment
+int segD = 4; //display pins - segment
+int segE = 5; //display pins - segment
+int segF = 6; //display pins - segment
+int segG = 7; //display pins - segment
 
 
 void setup()
 {
-  vw_set_rx_pin (uint8_t pin);
-  pinMode(segA, OUTPUT);
-  pinMode(segB, OUTPUT);
-  pinMode(segC, OUTPUT);
-  pinMode(segD, OUTPUT);
-  pinMode(segE, OUTPUT);
-  pinMode(segF, OUTPUT);
-  pinMode(segG, OUTPUT);
+  pinMode(rx_pin, INPUT);  //pin with reciever
+  pinMode(segA, OUTPUT); //display pins - segment
+  pinMode(segB, OUTPUT); //display pins - segment
+  pinMode(segC, OUTPUT); //display pins - segment
+  pinMode(segD, OUTPUT); //display pins - segment
+  pinMode(segE, OUTPUT); //display pins - segment
+  pinMode(segF, OUTPUT); //display pins - segment
+  pinMode(segG, OUTPUT); //display pins - segment
 
-  pinMode(digit1, OUTPUT);
-  pinMode(digit2, OUTPUT);
-  pinMode(digit3, OUTPUT);
-  pinMode(digit4, OUTPUT);
-  
-  pinMode(13, OUTPUT);
+  pinMode(digit1, OUTPUT); //display pins - digit
+  pinMode(digit2, OUTPUT); //display pins - digit
+  pinMode(digit3, OUTPUT); //display pins - digit
+  pinMode(digit4, OUTPUT); //display pins - digit
 }
 
 void loop()
 {
   time_start = millis();
   while (count < total + 1){
-    if (vw_get_message(buf, &buflen)) // Counts how many messages it recieved
+    if (digitalRead(rx_pin) == HIGH)// Counts how many pulses it recieved
     {
       count++;
     }
   }
   time_total = millis() - time_start;
-  int quot = int(time_total*100/time_est);
-  int dose(quot, 100, 300, 9999, 0)
-  displayNumber(dose)
+  int quot = int(time_total*100/time_est);  //converts time needed for total amount of pulses into distance
+  int dose(quot, 100, 300, 9999, 0);
+  displayNumber(dose);
 }
 
 
-void displayNumber(int toDisplay) {
+void displayNumber(int toDisplay) { //displays number on a display
 #define DISPLAY_BRIGHTNESS  500
 #define DIGIT_ON  HIGH
 #define DIGIT_OFF  LOW
@@ -105,54 +102,7 @@ long beginTime = millis();
   //Wait for 20ms to pass before we paint the display again
 }
 
-void displayNumber(int toDisplay) {
-#define DISPLAY_BRIGHTNESS  500
-
-#define DIGIT_ON  HIGH
-#define DIGIT_OFF  LOW
-
-  long beginTime = millis();
-
-  for(int digit = 4 ; digit > 0 ; digit--) {
-
-    //Turn on a digit for a short amount of time
-    switch(digit) {
-    case 1:
-      digitalWrite(digit1, DIGIT_ON);
-      break;
-    case 2:
-      digitalWrite(digit2, DIGIT_ON);
-      break;
-    case 3:
-      digitalWrite(digit3, DIGIT_ON);
-      break;
-    case 4:
-      digitalWrite(digit4, DIGIT_ON);
-      break;
-    }
-
-    //Turn on the right segments for this digit
-    lightNumber(toDisplay % 10);
-    toDisplay /= 10;
-
-    delayMicroseconds(DISPLAY_BRIGHTNESS); 
-    //Display digit for fraction of a second (1us to 5000us, 500 is pretty good)
-
-    //Turn off all segments
-    lightNumber(10); 
-
-    //Turn off all digits
-    digitalWrite(digit1, DIGIT_OFF);
-    digitalWrite(digit2, DIGIT_OFF);
-    digitalWrite(digit3, DIGIT_OFF);
-    digitalWrite(digit4, DIGIT_OFF);
-  }
-
-  while( (millis() - beginTime) < 10) ; 
-  //Wait for 20ms to pass before we paint the display again
-}
-
-void lightNumber(int numberToDisplay) {
+void lightNumber(int numberToDisplay) { //displays a single digit on a display
 //Given a number, turns on those segments
 //If number == 10, then turn off number
 #define SEGMENT_ON  LOW
