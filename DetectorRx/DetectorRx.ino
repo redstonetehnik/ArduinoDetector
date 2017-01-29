@@ -7,10 +7,10 @@
 const int rx_pin = 12; //pin with reciever connected to it
 const int total = 100; //total amount of signals to listen to in single round
 int count = 0; //amount of recieved pulses
-int time_start; //starting time (before counting pulses)
-int time_total; //time needed to count the pulses
-int time_est = 30 * total; //time that it should need to count all the pulses (0% loss)
-int dose = 0000; //beginning dose
+float time_start; //starting time (before counting pulses)
+float time_total; //time needed to count the pulses
+float time_est = 30 * total; //time that it should need to count all the pulses (0% loss)
+float dose = 0000; //beginning dose
 /*
 int digit1 = 11; //display pins - digit
 int digit2 = 10; //display pins - digit
@@ -49,16 +49,18 @@ void setup()
 void loop()
 {
   time_start = millis();
-  while (count < total + 1){
-    if (digitalRead(rx_pin) == HIGH)// Counts how many pulses it recieved
-    {
-      count++;
-    }
-  //  displayNumber(dose);
-  }
+  delay(50000);
+//  while (count < total + 1){
+//    if (digitalRead(rx_pin) == HIGH)// Counts how many pulses it recieved
+//    {
+//      count++;
+//    }
+//  //  displayNumber(dose);
+//  }
   time_total = millis() - time_start;
-  int quot = int(time_total*100/time_est);  //converts time needed for total amount of pulses into distance
+  float quot = time_total*100/time_est;  //converts time needed for total amount of pulses into distance
   dose = map(quot, 100, 300, 9999, 0);
+//  dose = map(dose, -30000, 15000, 0.001, 500);
   Serial.println(dose);
 }
 
